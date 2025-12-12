@@ -1,6 +1,7 @@
 on:
   watch:
     types: started
+  workflow_dispatch:  # 允许手动触发
 jobs:
   prepare_release:
     runs-on: ubuntu-22.04
@@ -268,6 +269,12 @@ jobs:
         #     ../scripts/3rd/add_r8125.sh
         #     ;;
         # esac
+
+        ## Build iwlwifi driver (for BE200 and other Intel Wi-Fi cards)
+        if [ -f ../scripts/wifi/add_iwlwifi.sh ]; then
+            echo "Building iwlwifi driver..."
+            ../scripts/wifi/add_iwlwifi.sh
+        fi
 
     - name: Build sd image
       id: build_sd_image
